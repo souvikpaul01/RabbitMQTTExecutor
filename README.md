@@ -31,6 +31,16 @@ rabbitMQTTBroker
 
 For setting up RabbitMQ broker as a Docker container with MQTT enabled. 
 
-docker run --name rabbitmqtt -d -p 15672:15672 -p 1883:1883 -p 5672:5672 -e RABBITMQ_DEFAULT_USER=username -e RABBITMQ_DEFAULT_PASS=password rabbitmqtt 
+
+docker build -t rabbitmqtt .
+docker run --name rabbitmqtt -d -p 15672:15672 -p 1883:1883 -p 5672:5672 -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest rabbitmqtt 
+
+
+PythonScriptExecutor
+
+
+docker build -t rabbitmqttexecutor .
+docker run -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest  -e TASK_QUEUE_HOST=172.17.124.22  -e TASK_QUEUE=task_queue_json  -e INPUT_MQTT_TOPIC=input  -e OUTPUT_MQTT_TOPIC=output rabbitmqttexecutor 
+
 
 

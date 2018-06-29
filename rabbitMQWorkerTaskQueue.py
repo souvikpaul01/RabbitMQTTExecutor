@@ -43,7 +43,7 @@ if __name__ == '__main__':
         output_mqtt_topic = args[3]  # "output"
 
         #Specify connection credentials
-
+        print("Arguments: ", task_queue_host, " ", task_queue, " ", input_mqtt_topic, " ", output_mqtt_topic )
         username = "quest"
         if 'RABBITMQ_DEFAULT_USER' in os.environ:
             username = os.environ['RABBITMQ_DEFAULT_USER']
@@ -52,7 +52,7 @@ if __name__ == '__main__':
         if 'RABBITMQ_DEFAULT_PASS' in os.environ:
             password = os.environ['RABBITMQ_DEFAULT_PASS']
 
-            credentials = pika.PlainCredentials(os.environ['RABBITMQ_DEFAULT_PASS'], os.environ['RABBITMQ_DEFAULT_PASS'])
+            credentials = pika.PlainCredentials(os.environ['RABBITMQ_DEFAULT_USER'], os.environ['RABBITMQ_DEFAULT_PASS'])
 
             # Connect to task queue
             connection = pika.BlockingConnection(pika.ConnectionParameters(host=task_queue_host, credentials=credentials))
