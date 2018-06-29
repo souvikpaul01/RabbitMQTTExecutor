@@ -10,7 +10,7 @@ Distributed Python Task Executor for:
 
 For setting up RabbitMQ broker as a Docker container with MQTT enabled. 
 
-###Docker commands:
+**Docker commands:**
 
 ```
 docker build -t rabbitmqtt .
@@ -41,7 +41,7 @@ Any number of task executors can subscribe to the same work queue and RAbbitMQ w
 Implement call(data) function. This is called for every MQTT message. Results are published to output_mqtt_topic MQTT topic. 
 
 
-###Docker commands:
+**Docker commands**
 
 
 ```
