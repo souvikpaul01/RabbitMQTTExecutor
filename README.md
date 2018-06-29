@@ -1,14 +1,15 @@
-# RabbitMQTTExecutor 
+# RabbitMQTTExecutor - Distributed data processing for MQTT data streams. 
 
-Distributed Python Task Executor for:
-1. listening to MQTT messages in the RabbitMQ broker on a specific topic
-2. executing Python UDF to process each message 
-3. writing results back as MQTT messages to another topic
+
+Allows to easily create a cluster of docker containers that:
+1. listen to MQTT messages on a specific topic in the RabbitMQ broker 
+2. execute user defined function (UDF) to process each message 
+3. write result back as an MQTT message to another topic
 
 
 ## rabbitMQTTBroker
 
-For setting up RabbitMQ broker as a Docker container with MQTT enabled. 
+Docker image for setting up RabbitMQ broker with MQTT plugin enabled. 
 
 **Docker commands:**
 
@@ -20,20 +21,20 @@ docker run --name rabbitmqtt -d -p 15672:15672 -p 1883:1883 -p 5672:5672 -e RABB
 
 ## PythonScriptExecutor
 
+Docker image for executing Python UDF on MQTT messages in RabbitMQ broker.
 
 **rabbitMQWorkerTaskQueue.py**
 
 This Python script sets up and subscribes to a RabbitMQ work queue and executes a Python function for every task. 
 It also sets up a binding to route messages from a MQTT topic into the work queue and publishes results back into another MQTT topic. 
-
-Any number of task executors can subscribe to the same work queue and RAbbitMQ will distribute the work tasks between them. 
+Any number of task executors can subscribe to the same work queue and RabbitMQ will automatically distribute the work tasks between them. 
 
 **Arguments should be:** 
 
-- **task_queue_host** - Ip or hostname of the RabbitMQ broker. MQTT plugin must be activated
+- **task_queue_host** - IP or hostname of the RabbitMQ broker. MQTT plugin must be activated
 - **task_queue** -  Name for the task queue (will be created if does not exist)
 - **input_mqtt_topic** - Input MQTT topic to listen to
-- **output_mqtt_topic** - Output MQTT topic to publis results to
+- **output_mqtt_topic** - Output MQTT topic to publish results to
 
 
 **userDefinedFunction.py**
