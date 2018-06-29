@@ -43,34 +43,35 @@ if __name__ == '__main__':
         output_mqtt_topic = args[3]  # "output"
 
         #Specify connection credentials
-	username = "quest" 
-	if 'RABBITMQ_DEFAULT_USER' in os.environ:
-		username = os.environ['RABBITMQ_DEFAULT_USER']
 
-	password = "quest"
-	if 'RABBITMQ_DEFAULT_PASS' in os.environ:
-		password = os.environ['RABBITMQ_DEFAULT_PASS']
-	
-        credentials = pika.PlainCredentials(os.environ['RABBITMQ_DEFAULT_PASS'], os.environ['RABBITMQ_DEFAULT_PASS'])
+        username = "quest"
+        if 'RABBITMQ_DEFAULT_USER' in os.environ:
+            username = os.environ['RABBITMQ_DEFAULT_USER']
 
-        # Connect to task queue
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host=task_queue_host, credentials=credentials))
-        channel = connection.channel()
+        password = "quest"
+        if 'RABBITMQ_DEFAULT_PASS' in os.environ:
+            password = os.environ['RABBITMQ_DEFAULT_PASS']
 
-        #Declare "new" task queue (create only if one does not exist)
-        channel.queue_declare(queue=task_queue, durable=True)
+            credentials = pika.PlainCredentials(os.environ['RABBITMQ_DEFAULT_PASS'], os.environ['RABBITMQ_DEFAULT_PASS'])
 
-        #Bind the task queue to the input MQTT topic (input_routing_key)
-        channel.queue_bind(exchange='amq.topic', queue=task_queue, routing_key=input_mqtt_topic)
+            # Connect to task queue
+            connection = pika.BlockingConnection(pika.ConnectionParameters(host=task_queue_host, credentials=credentials))
+            channel = connection.channel()
 
-        print(' [*] Waiting for messages. To exit press CTRL+C')
-        channel.basic_qos(prefetch_count=1)
+            #Declare "new" task queue (create only if one does not exist)
+            channel.queue_declare(queue=task_queue, durable=True)
 
-        # Define function to be executed on each MQTT message
-        channel.basic_consume(callback, queue=task_queue)
+            #Bind the task queue to the input MQTT topic (input_routing_key)
+            channel.queue_bind(exchange='amq.topic', queue=task_queue, routing_key=input_mqtt_topic)
 
-        # Start listening to task queue
-        channel.start_consuming()
+            print(' [*] Waiting for messages. To exit press CTRL+C')
+            channel.basic_qos(prefetch_count=1)
+
+            # Define function to be executed on each MQTT message
+            channel.basic_consume(callback, queue=task_queue)
+
+            # Start listening to task queue
+            channel.start_consuming()
 
     except:
         print("Error occured")
