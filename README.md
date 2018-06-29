@@ -1,9 +1,21 @@
-# RabbitMQTTExecutor
+# RabbitMQTTExecutor 
 
 Distributed Python Task Executor for:
 1. listening to MQTT messages in the RabbitMQ broker on a specific topic
 2. executing Python UDF to process each message 
 3. writing results back as MQTT messages to another topic
+
+
+rabbitMQTTBroker
+
+For setting up RabbitMQ broker as a Docker container with MQTT enabled. 
+
+Docker commands:
+docker build -t rabbitmqtt .
+docker run --name rabbitmqtt -d -p 15672:15672 -p 1883:1883 -p 5672:5672 -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest rabbitmqtt 
+
+
+PythonScriptExecutor
 
 
 rabbitMQWorkerTaskQueue.py
@@ -27,16 +39,10 @@ userDefinedFunction.py
 implement call(data) function. This is called for every MQTT message. Results are published to output_mqtt_topic MQTT topic. 
 
 
-rabbitMQTTBroker
-
-For setting up RabbitMQ broker as a Docker container with MQTT enabled. 
 
 
-docker build -t rabbitmqtt .
-docker run --name rabbitmqtt -d -p 15672:15672 -p 1883:1883 -p 5672:5672 -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest rabbitmqtt 
 
-
-PythonScriptExecutor
+Docker commands:
 
 
 docker build -t rabbitmqttexecutor .
