@@ -9,7 +9,7 @@ var output_topic = 'output';
 
 function udf(msg){
 
-	#Do something:
+	//Do something:
 	result = msg;
 
 	console.log(" [x] Computed %s", result);
