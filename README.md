@@ -51,3 +51,9 @@ docker run -d -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest  -e 
 ```
 
 
+
+## JSScriptExecutor 
+
+Java script example for executing JS UDF on MQTT messages in RabbitMQ broker.
+
+
