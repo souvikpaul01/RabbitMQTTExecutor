@@ -6,6 +6,8 @@ Allows to easily create a cluster of docker containers that:
 2. execute user defined function (UDF) to process each message 
 3. write result back as an MQTT message to another topic
 
+Supports a large number of concurrently working executors that divide the work between them. 
+
 
 ## rabbitMQTTBroker
 
