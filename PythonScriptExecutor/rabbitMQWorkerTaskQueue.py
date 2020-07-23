@@ -68,7 +68,7 @@ if __name__ == '__main__':
             channel.basic_qos(prefetch_count=1)
 
             # Define function to be executed on each MQTT message
-            channel.basic_consume(callback, queue=task_queue)
+            channel.basic_consume(task_queue, callback)
 
             # Start listening to task queue
             channel.start_consuming()
