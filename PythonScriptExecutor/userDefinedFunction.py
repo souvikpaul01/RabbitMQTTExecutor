@@ -6,13 +6,17 @@ import json
 
 def call(data):
     #Convert input data from binary
-    vals = json.loads(data.decode("utf-8"))
+    vals = data
 
     #Apply the actual UDF
-    out = classify(vals)
+    out = covert(vals)
 
     #Return result converted into string
     return str(out)
+
+
+def convert(vals):
+    return vals.upper()
 
 def classify(vals):
 
